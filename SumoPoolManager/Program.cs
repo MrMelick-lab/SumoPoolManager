@@ -11,7 +11,6 @@ using IHost host = Host.CreateDefaultBuilder(args)
     .Build();
 
 var webScrapper = host.Services.GetService<IWebScrapper>();
-var results = await webScrapper.GetBashoResults();
+var results = await webScrapper.GetBashoResults("202301",15);
 Console.Write(results);
 await host.RunAsync();
-
