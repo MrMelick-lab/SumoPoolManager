@@ -14,7 +14,7 @@ namespace SumoPoolManager
         public async Task<Dictionary<string, int>> GetBashoResults(string bashoId, int day)
         {
             var results = new Dictionary<string, int>();
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("SumoBasho");
             for (int i = 1; i <= day; i++)
             {
                 // URL of the sumo basho results page to scrape
@@ -59,7 +59,7 @@ namespace SumoPoolManager
             return results;
         }
 
-        private (string name, int score) GetNameAndScoreFromBoutNode(HtmlNode boutNode, string direction)
+        private static (string name, int score) GetNameAndScoreFromBoutNode(HtmlNode boutNode, string direction)
         {
             return (boutNode.SelectSingleNode($".//td[@class='tk_{direction}']//center//a[1]").InnerText,
                 int.Parse(boutNode.SelectSingleNode($".//td[@class='tk_{direction}']//center//a[2]//font").InnerText.Split(" ")[0].Split("-")[0]));
