@@ -1,0 +1,53 @@
+﻿{
+  "TimestampId": "202301",
+  "Participants": [
+    {
+      "Name": "MrMelick",
+      "Score": 0,
+      "Rikishis": [
+        {
+          "Name": "Takakeisho",
+          "DayOEntry": 0,
+          "DayOfExit": 0,
+          "IsOut": false
+        },
+        {
+          "Name": "Midorifuji",
+          "DayOEntry": 0,
+          "DayOfExit": 0,
+          "IsOut": false
+        },
+        {
+          "Name": "Kiribayama",
+          "DayOEntry": 0,
+          "DayOfExit": 0,
+          "IsOut": false
+        },
+        {
+          "Name": "Daeisho",
+          "DayOEntry": 0,
+          "DayOfExit": 0,
+          "IsOut": false
+        },
+        {
+          "Name": "Tamawashi",
+          "DayOEntry": 0,
+          "DayOfExit": 0,
+          "IsOut": false
+        },
+        {
+          "Name": "Abi",
+          "DayOEntry": 0,
+          "DayOfExit": 0,
+          "IsOut": false
+        },
+        {
+          "Name": "Sadanoumi",
+          "DayOEntry": 0,
+          "DayOfExit": 0,
+          "IsOut": false
+        }
+      ]
+    }
+  ]
+}
