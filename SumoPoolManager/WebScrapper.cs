@@ -14,6 +14,9 @@ namespace SumoPoolManager
 
         public async Task<List<BoutResult>> GetBashoResults(string bashoId, short day)
         {
+            if(string.IsNullOrWhiteSpace(bashoId) || day < 0 || day > 15)
+                return new List<BoutResult>();
+
             var results = new List<BoutResult>();
             var client = _httpClientFactory.CreateClient("SumoBasho");
             for (short i = 1; i <= day; i++)
@@ -50,6 +53,5 @@ namespace SumoPoolManager
             }
             return results;
         }
-
     }
 }
