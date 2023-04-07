@@ -7,45 +7,31 @@
       "Rikishis": [
         {
           "Name": "Takakeisho",
-          "DayOEntry": 0,
-          "DayOfExit": 0,
-          "IsOut": false
+          "DayOfEntry": 0
         },
         {
           "Name": "Midorifuji",
-          "DayOEntry": 0,
-          "DayOfExit": 0,
-          "IsOut": false
+          "DayOfEntry": 0
         },
         {
           "Name": "Kiribayama",
-          "DayOEntry": 0,
-          "DayOfExit": 0,
-          "IsOut": false
+          "DayOfEntry": 0
         },
         {
           "Name": "Daeisho",
-          "DayOEntry": 0,
-          "DayOfExit": 0,
-          "IsOut": false
+          "DayOfEntry": 0
         },
         {
           "Name": "Tamawashi",
-          "DayOEntry": 0,
-          "DayOfExit": 0,
-          "IsOut": false
+          "DayOfEntry": 0
         },
         {
           "Name": "Abi",
-          "DayOEntry": 0,
-          "DayOfExit": 0,
-          "IsOut": false
+          "DayOfEntry": 0
         },
         {
           "Name": "Sadanoumi",
-          "DayOEntry": 0,
-          "DayOfExit": 0,
-          "IsOut": false
+          "DayOfEntry": 0
         }
       ]
     }

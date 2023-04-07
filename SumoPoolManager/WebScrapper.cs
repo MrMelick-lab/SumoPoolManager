@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using System.Reflection;
 
 namespace SumoPoolManager
 {
@@ -11,11 +12,11 @@ namespace SumoPoolManager
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<Dictionary<string, int>> GetBashoResults(string bashoId, int day)
+        public async Task<List<BoutResult>> GetBashoResults(string bashoId, short day)
         {
-            var results = new Dictionary<string, int>();
+            var results = new List<BoutResult>();
             var client = _httpClientFactory.CreateClient("SumoBasho");
-            for (int i = 1; i <= day; i++)
+            for (short i = 1; i <= day; i++)
             {
                 // URL of the sumo basho results page to scrape
                 string? url = $"https://sumodb.sumogames.de/Results.aspx?b={bashoId}&d={i}";
@@ -42,27 +43,13 @@ namespace SumoPoolManager
                     if (node == null)
                         continue;
 
-                    var tkEastRikishiNameAndScore = GetNameAndScoreFromBoutNode(boutNode, "east");
-                    var tkWestRikishiNameAndScore = GetNameAndScoreFromBoutNode(boutNode, "west");
-
-                    if (results.ContainsKey(tkEastRikishiNameAndScore.name))
-                        results[tkEastRikishiNameAndScore.name] = tkEastRikishiNameAndScore.score;
-                    else
-                        results.Add(tkEastRikishiNameAndScore.name, tkEastRikishiNameAndScore.score);
-
-                    if (results.ContainsKey(tkWestRikishiNameAndScore.name))
-                        results[tkWestRikishiNameAndScore.name] = tkWestRikishiNameAndScore.score;
-                    else
-                        results.Add(tkWestRikishiNameAndScore.name, tkWestRikishiNameAndScore.score);
+                    var imgShiro = node.SelectSingleNode(@".//img[@src='img/hoshi_shiro.gif']");
+                    var winner = imgShiro == null ? boutNode.SelectSingleNode(".//td[@class='tk_west']//center//a[1]").InnerText : boutNode.SelectSingleNode(".//td[@class='tk_east']//center//a[1]").InnerText;
+                    results.Add(new BoutResult { Day = i, Name = winner, Win = true });
                 }
             }
             return results;
         }
 
-        private static (string name, int score) GetNameAndScoreFromBoutNode(HtmlNode boutNode, string direction)
-        {
-            return (boutNode.SelectSingleNode($".//td[@class='tk_{direction}']//center//a[1]").InnerText,
-                int.Parse(boutNode.SelectSingleNode($".//td[@class='tk_{direction}']//center//a[2]//font").InnerText.Split(" ")[0].Split("-")[0]));
-        }
     }
 }

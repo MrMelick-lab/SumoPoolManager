@@ -2,6 +2,6 @@
 {
     public interface IWebScrapper
     {
-        Task<Dictionary<string, int>> GetBashoResults(string bashoId, int day);
+        Task<List<BoutResult>> GetBashoResults(string bashoId, short day);
     }
 }
