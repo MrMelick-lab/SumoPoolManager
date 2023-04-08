@@ -1,5 +1,4 @@
 ﻿using HtmlAgilityPack;
-using System.Reflection;
 
 namespace SumoPoolManager
 {
@@ -14,7 +13,7 @@ namespace SumoPoolManager
 
         public async Task<List<BoutResult>> GetBashoResults(string bashoId, short day)
         {
-            if(string.IsNullOrWhiteSpace(bashoId) || day < 0 || day > 15)
+            if(string.IsNullOrWhiteSpace(bashoId) || day < 1 || day > 15)
                 return new List<BoutResult>();
 
             var results = new List<BoutResult>();
@@ -35,9 +34,6 @@ namespace SumoPoolManager
 
                 // Find the HTML element that contains the basho results
                 var resultsNode = doc.DocumentNode.SelectNodes("//table[@class='tk_table']").FirstOrDefault();
-
-                if (resultsNode == null)
-                    return results;
 
                 //Loop through each bout and print the winner and loser
                 foreach (var boutNode in resultsNode.SelectNodes(".//tr"))

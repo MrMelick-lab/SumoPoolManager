@@ -19,7 +19,7 @@ var scoreCalculator = host.Services.GetService<IScoreCalculator>();
 if (scoreCalculator == null || pool == null)
     return;
 
-var results = await scoreCalculator.CalculateScoreForPoolUntilSelectedDay(pool, 15);
+var results = await scoreCalculator.CalculateScoreForPoolUntilSelectedDay(pool, 1);
 Console.Write(results);
 await host.RunAsync();
 
