@@ -1,7 +1,3 @@
-using RichardSzalay.MockHttp;
-using SumoPoolManager;
-using System.Text.Json;
-
 namespace TestProject
 {
     public class WebScrapperTest

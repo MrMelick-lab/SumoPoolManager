@@ -2,6 +2,6 @@
 {
     public interface IScoreCalculator
     {
-        public Task<Pool> CalculateScoreForPoolUntilSelectedDay(Pool pool, short day);
+        Task<List<Participant>> CalculateScoreForPoolUntilSelectedDay(List<Participant> participantsSansScore, string bashoId, short day);
     }
 }

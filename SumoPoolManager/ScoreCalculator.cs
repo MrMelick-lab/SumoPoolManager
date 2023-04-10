@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-
-namespace SumoPoolManager
+﻿namespace SumoPoolManager
 {
     public class ScoreCalculator : IScoreCalculator
     {
@@ -11,12 +9,22 @@ namespace SumoPoolManager
             _webScrapper = webScrapper;
         }
 
-        public async Task<Pool> CalculateScoreForPoolUntilSelectedDay(Pool pool, short day)
+        public async Task<List<Participant>> CalculateScoreForPoolUntilSelectedDay(List<Participant> participantsSansScore, string bashoId, short day)
         {
-            var results =  await _webScrapper.GetBashoResults(pool.TimestampId, day);
+            var scoreParticipant = new List<Participant>();
+            if (participantsSansScore == null || !participantsSansScore.Any() || string.IsNullOrWhiteSpace(bashoId) || day < 1 || day > 15)
+                return scoreParticipant;
+
+            var results =  await _webScrapper.GetBashoResults(bashoId, day);
+
+            if (!results.Any())
+                return scoreParticipant;
+
+            scoreParticipant = participantsSansScore;
+
             for (short i = 1; i <= day; i++)
             {
-                foreach (var participant in pool.Participants)
+                foreach (var participant in scoreParticipant)
                 {
                     short scoreForTheDay = 0;
                     foreach (var rikishi in participant.Rikishis)
@@ -25,15 +33,13 @@ namespace SumoPoolManager
                             continue;
 
                         if (results.Any(r => r.Name == rikishi.Name && r.Day == i && r.Win))
-                        {
                             scoreForTheDay++;
-                        }
                     }
                     participant.Score += scoreForTheDay;
                 }
             }
 
-            return pool;
+            return scoreParticipant;
         }
     }
 }
