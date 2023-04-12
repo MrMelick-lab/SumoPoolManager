@@ -35,35 +35,42 @@ namespace SumoPoolManager
                 // Find the HTML element that contains the basho results
                 var resultsNode = doc.DocumentNode.SelectNodes("//table[@class='tk_table']").FirstOrDefault();
 
-                //Loop through each bout and print the winner and loser
+                //Loop through each bout and get the winner
                 foreach (var boutNode in resultsNode.SelectNodes(".//tr"))
                 {
                     var node = boutNode.SelectSingleNode(".//td[@class='tk_kekka']");
                     if (node == null)
                         continue;
 
-                    var imgShiro = node.SelectSingleNode(@".//img[@src='img/hoshi_shiro.gif']");
-                    var imgFusensho = node.SelectSingleNode(@".//img[@src='img/hoshi_fusensho.gif']");
-                    string winner;
-                    if (imgShiro == null)
-                    {
-                        if (imgFusensho == null)
-                            winner = boutNode.SelectSingleNode(".//td[@class='tk_west']//center//a[1]").InnerText;
-                        else
-                            winner = boutNode.SelectSingleNode(".//td[@class='tk_east']//center//a[1]").InnerText;
-                    }
-                    else
-                    {
-                        if (imgFusensho == null)
-                            winner = boutNode.SelectSingleNode(".//td[@class='tk_east']//center//a[1]").InnerText;
-                        else
-                            winner = boutNode.SelectSingleNode(".//td[@class='tk_west']//center//a[1]").InnerText;
-                    }
+                    var winner = ExtractWinner(boutNode, node);
 
                     results.Add(new WinnerOnDay { Day = i, Name = winner });
                 }
             }
             return results;
+        }
+
+        private static string ExtractWinner(HtmlNode boutNode, HtmlNode node)
+        {
+            var imgShiro = node.SelectSingleNode(@".//img[@src='img/hoshi_shiro.gif']");
+            var imgFusensho = node.SelectSingleNode(@".//img[@src='img/hoshi_fusensho.gif']");
+            string winner;
+            if (imgShiro == null)
+            {
+                if (imgFusensho == null)
+                    winner = boutNode.SelectSingleNode(".//td[@class='tk_west']//center//a[1]").InnerText;
+                else
+                    winner = boutNode.SelectSingleNode(".//td[@class='tk_east']//center//a[1]").InnerText;
+            }
+            else
+            {
+                if (imgFusensho == null)
+                    winner = boutNode.SelectSingleNode(".//td[@class='tk_east']//center//a[1]").InnerText;
+                else
+                    winner = boutNode.SelectSingleNode(".//td[@class='tk_west']//center//a[1]").InnerText;
+            }
+
+            return winner;
         }
     }
 }

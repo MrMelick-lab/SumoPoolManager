@@ -26,20 +26,26 @@
             {
                 foreach (var participant in scoreParticipant)
                 {
-                    short scoreForTheDay = 0;
-                    foreach (var rikishi in participant.Rikishis)
-                    {
-                        if (rikishi.DayOfEntry > i)
-                            continue;
-
-                        if (results.Any(r => r.Name == rikishi.Name && r.Day == i))
-                            scoreForTheDay++;
-                    }
-                    participant.Score += scoreForTheDay;
+                    participant.Score += GetScoreForTheDayForParticipant(results, i, participant);
                 }
             }
 
             return scoreParticipant;
+        }
+
+        private static short GetScoreForTheDayForParticipant(List<WinnerOnDay> results, short i, Participant participant)
+        {
+            short scoreForTheDay = 0;
+            foreach (var rikishi in participant.Rikishis)
+            {
+                if (rikishi.DayOfEntry > i)
+                    continue;
+
+                if (results.Any(r => r.Name == rikishi.Name && r.Day == i))
+                    scoreForTheDay++;
+            }
+
+            return scoreForTheDay;
         }
     }
 }
