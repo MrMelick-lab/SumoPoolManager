@@ -11,12 +11,12 @@ namespace SumoPoolManager
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<List<BoutResult>> GetBashoResults(string bashoId, short day)
+        public async Task<List<WinnerOnDay>> GetBashoResults(string bashoId, short day)
         {
             if(string.IsNullOrWhiteSpace(bashoId) || day < 1 || day > 15)
-                return new List<BoutResult>();
+                return new List<WinnerOnDay>();
 
-            var results = new List<BoutResult>();
+            var results = new List<WinnerOnDay>();
             var client = _httpClientFactory.CreateClient("SumoBasho");
             for (short i = 1; i <= day; i++)
             {
@@ -43,8 +43,24 @@ namespace SumoPoolManager
                         continue;
 
                     var imgShiro = node.SelectSingleNode(@".//img[@src='img/hoshi_shiro.gif']");
-                    var winner = imgShiro == null ? boutNode.SelectSingleNode(".//td[@class='tk_west']//center//a[1]").InnerText : boutNode.SelectSingleNode(".//td[@class='tk_east']//center//a[1]").InnerText;
-                    results.Add(new BoutResult { Day = i, Name = winner, Win = true });
+                    var imgFusensho = node.SelectSingleNode(@".//img[@src='img/hoshi_fusensho.gif']");
+                    string winner;
+                    if (imgShiro == null)
+                    {
+                        if (imgFusensho == null)
+                            winner = boutNode.SelectSingleNode(".//td[@class='tk_west']//center//a[1]").InnerText;
+                        else
+                            winner = boutNode.SelectSingleNode(".//td[@class='tk_east']//center//a[1]").InnerText;
+                    }
+                    else
+                    {
+                        if (imgFusensho == null)
+                            winner = boutNode.SelectSingleNode(".//td[@class='tk_east']//center//a[1]").InnerText;
+                        else
+                            winner = boutNode.SelectSingleNode(".//td[@class='tk_west']//center//a[1]").InnerText;
+                    }
+
+                    results.Add(new WinnerOnDay { Day = i, Name = winner });
                 }
             }
             return results;

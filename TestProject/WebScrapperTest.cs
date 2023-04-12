@@ -56,7 +56,7 @@ namespace TestProject
             httpClient = new(msgHandler);
             httpClientFactory.CreateClient("SumoBasho").Returns(httpClient);
             using var expectedResultStream = File.OpenRead(Path.Combine(Environment.CurrentDirectory, "results202301day1.json"));
-            var expectedResults = await JsonSerializer.DeserializeAsync<List<BoutResult>>(expectedResultStream);
+            var expectedResults = await JsonSerializer.DeserializeAsync<List<WinnerOnDay>>(expectedResultStream);
 
             //Act
             var results = await webScrapper.GetBashoResults(bashoId, day);

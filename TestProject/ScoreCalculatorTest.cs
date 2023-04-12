@@ -37,7 +37,7 @@ namespace TestProject
         [Fact]
         public async Task GivenNullWebScrapperResult_ShouldReturnEmptyResults()
         {
-            _webScrapper.GetBashoResults("test", 1).Returns(new List<BoutResult>());
+            _webScrapper.GetBashoResults("test", 1).Returns(new List<WinnerOnDay>());
 
             var results = await _scoreCalculator.CalculateScoreForPoolUntilSelectedDay(new List<Participant> { new Participant() }, "test", 1);
 

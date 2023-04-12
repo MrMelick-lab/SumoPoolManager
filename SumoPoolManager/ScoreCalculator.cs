@@ -32,7 +32,7 @@
                         if (rikishi.DayOfEntry > i)
                             continue;
 
-                        if (results.Any(r => r.Name == rikishi.Name && r.Day == i && r.Win))
+                        if (results.Any(r => r.Name == rikishi.Name && r.Day == i))
                             scoreForTheDay++;
                     }
                     participant.Score += scoreForTheDay;
