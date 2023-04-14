@@ -7,6 +7,7 @@
         private readonly Fixture _fixture;
         private readonly List<Participant> _participants = new();
         private readonly List<WinnerOnDay> _results202303day1 = new();
+        private readonly List<WinnerOnDay> _results202303day15 = new();
 
         public ScoreCalculatorTest() 
         {
@@ -53,8 +54,10 @@
                     }
                 }
             });
-            using var expectedResultStream = File.OpenRead(Path.Combine(Environment.CurrentDirectory, "results202303day1.json"));
-            _results202303day1 = JsonSerializer.Deserialize<List<WinnerOnDay>>(expectedResultStream);
+            using var expectedResult202303day1Stream = File.OpenRead(Path.Combine(Environment.CurrentDirectory, "results202303day1.json"));
+            _results202303day1 = JsonSerializer.Deserialize<List<WinnerOnDay>>(expectedResult202303day1Stream);
+            using var expectedResult202303day15Stream = File.OpenRead(Path.Combine(Environment.CurrentDirectory, "results202303day15.json"));
+            _results202303day15 = JsonSerializer.Deserialize<List<WinnerOnDay>>(expectedResult202303day15Stream);
         }
 
         public static IEnumerable<object[]> GetInvalidParameters()
@@ -95,6 +98,18 @@
             results.Should().HaveCount(1);
             results.ElementAt(0).Name.Should().Be("MrMelick");
             results.ElementAt(0).Score.Should().Be(4);
+        }
+
+        [Fact]
+        public async Task GivenResultOfDay15_ShouldReturnExpectedResults()
+        {
+            _webScrapper.GetBashoResults("202303", 15).Returns(_results202303day15);
+
+            var results = await _scoreCalculator.CalculateScoreForPoolUntilSelectedDay(_participants, "202303", 15);
+
+            results.Should().HaveCount(1);
+            results.ElementAt(0).Name.Should().Be("MrMelick");
+            results.ElementAt(0).Score.Should().Be(52);
         }
     }
 }
