@@ -1,4 +1,6 @@
-﻿namespace SumoPoolManager
+﻿using System.Text.Json;
+
+namespace SumoPoolManager
 {
     public class ScoreCalculator : IScoreCalculator
     {
