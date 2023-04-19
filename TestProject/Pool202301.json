@@ -1,0 +1,77 @@
+﻿{
+  "TimestampId": "202303",
+  "Participants": [
+    {
+      "Name": "MrMelick",
+      "Score": 0,
+      "Rikishis": [
+        {
+          "Name": "Takakeisho",
+          "DayOfEntry": 0
+        },
+        {
+          "Name": "Hoshoryu",
+          "DayOfEntry": 0
+        },
+        {
+          "Name": "Wakamotoharu",
+          "DayOfEntry": 0
+        },
+        {
+          "Name": "Kotonowaka",
+          "DayOfEntry": 0
+        },
+        {
+          "Name": "Tamawashi",
+          "DayOfEntry": 0
+        },
+        {
+          "Name": "Ryuden",
+          "DayOfEntry": 0
+        },
+        {
+          "Name": "Daieisho",
+          "DayOfEntry": 0
+        },
+        {
+          "Name": "Myogiryu",
+          "DayOfEntry": 7
+        }
+      ]
+    },
+    {
+      "Name": "WTH",
+      "Score": 0,
+      "Rikishis": [
+        {
+          "Name": "Kiribayama",
+          "DayOfEntry": 0
+        },
+        {
+          "Name": "Wakamotoharu",
+          "DayOfEntry": 0
+        },
+        {
+          "Name": "Abi",
+          "DayOfEntry": 0
+        },
+        {
+          "Name": "Midorifuji",
+          "DayOfEntry": 0
+        },
+        {
+          "Name": "Ura",
+          "DayOfEntry": 0
+        },
+        {
+          "Name": "Kagayaki",
+          "DayOfEntry": 0
+        },
+        {
+          "Name": "Kinbozan",
+          "DayOfEntry": 0
+        }
+      ]
+    }
+  ]
+}

@@ -11,6 +11,8 @@
 
   <ItemGroup>
     <None Remove="202301.html" />
+    <None Remove="InvalidFormat.json" />
+    <None Remove="Pool202301.json" />
     <None Remove="results202301day1.json" />
     <None Remove="results202303day1.json" />
     <None Remove="results202303day15.json" />
@@ -18,6 +20,12 @@
 
   <ItemGroup>
     <EmbeddedResource Include="202301.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InvalidFormat.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pool202301.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="results202301day1.json">

@@ -11,10 +11,10 @@ namespace SumoPoolManager
             _webScrapper = webScrapper;
         }
 
-        public async Task<List<Participant>> CalculateScoreForPoolUntilSelectedDay(List<Participant> participantsSansScore, string bashoId, short day)
+        public async Task<List<Participant>> CalculateScoreForPoolUntilSelectedDay(List<Participant> participantsWithoutScore, string bashoId, short day)
         {
             var scoreParticipant = new List<Participant>();
-            if (participantsSansScore == null || !participantsSansScore.Any() || string.IsNullOrWhiteSpace(bashoId) || day < 1 || day > 15)
+            if (participantsWithoutScore == null || !participantsWithoutScore.Any() || string.IsNullOrWhiteSpace(bashoId) || day < 1 || day > 15)
                 return scoreParticipant;
 
             var results =  await _webScrapper.GetBashoResults(bashoId, day);
@@ -22,7 +22,7 @@ namespace SumoPoolManager
             if (!results.Any())
                 return scoreParticipant;
 
-            scoreParticipant = participantsSansScore;
+            scoreParticipant = participantsWithoutScore;
 
             for (short i = 1; i <= day; i++)
             {
