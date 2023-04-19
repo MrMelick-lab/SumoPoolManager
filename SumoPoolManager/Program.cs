@@ -4,6 +4,7 @@ using Polly.Extensions.Http;
 using Polly;
 using SumoPoolManager;
 using System.Text.Json;
+using ConsoleTables;
 
 using IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
@@ -26,7 +27,17 @@ if (validationResult.IsValid())
         return;
 
     var results = await scoreCalculator.CalculateScoreForPoolUntilSelectedDay(pool.Participants, pool.TimestampId, short.Parse(args[1]));
-    Console.Write(results);
+    var presentationResut = new List<PresentationResult>();
+    foreach (var result in results)
+    {
+        presentationResut.Add(new PresentationResult
+        {
+            Name = result.Name,
+            Score = result.Score
+        });
+    }
+    var orderedPresentionResults = presentationResut.OrderByDescending(x => x.Score).ThenBy(x => x.Name);
+    ConsoleTable.From(orderedPresentionResults).Write();
 }
 else
 {
