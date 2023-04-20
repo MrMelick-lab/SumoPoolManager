@@ -1,9 +1,12 @@
+using Microsoft.Extensions.Logging;
+
 namespace TestProject
 {
     public class WebScrapperTest
     {
         private readonly string htmlPageOf202301;
         private readonly IHttpClientFactory httpClientFactory;
+        private readonly ILogger<WebScrapper> logger;
         private readonly WebScrapper webScrapper;
         private HttpClient? httpClient;
 
@@ -11,7 +14,8 @@ namespace TestProject
         {
             htmlPageOf202301 = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "202301.html"));
             httpClientFactory = Substitute.For<IHttpClientFactory>();
-            webScrapper = new WebScrapper(httpClientFactory);
+            logger = Substitute.For<ILogger<WebScrapper>>();
+            webScrapper = new WebScrapper(httpClientFactory, logger);
         }
 
         [Theory]

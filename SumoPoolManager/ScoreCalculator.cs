@@ -1,20 +1,22 @@
-﻿using System.Text.Json;
+﻿using Microsoft.Extensions.Logging;
 
 namespace SumoPoolManager
 {
     public class ScoreCalculator : IScoreCalculator
     {
         private readonly IWebScrapper _webScrapper;
+        private readonly ILogger<ScoreCalculator> _logger;
 
-        public ScoreCalculator(IWebScrapper webScrapper)
+        public ScoreCalculator(IWebScrapper webScrapper, ILogger<ScoreCalculator> logger)
         {
             _webScrapper = webScrapper;
+            _logger = logger;
         }
 
         public async Task<List<Participant>> CalculateScoreForPoolUntilSelectedDay(List<Participant> participantsWithoutScore, string bashoId, short day)
         {
             var scoreParticipant = new List<Participant>();
-            if (participantsWithoutScore == null || !participantsWithoutScore.Any() || string.IsNullOrWhiteSpace(bashoId) || day < 1 || day > 15)
+            if (participantsWithoutScore?.Any() != true || string.IsNullOrWhiteSpace(bashoId) || day < 1 || day > 15)
                 return scoreParticipant;
 
             var results =  await _webScrapper.GetBashoResults(bashoId, day);
@@ -26,10 +28,13 @@ namespace SumoPoolManager
 
             for (short i = 1; i <= day; i++)
             {
+                _logger.LogInformation("Day: {i}", i);
                 foreach (var participant in scoreParticipant)
                 {
                     participant.Score += GetScoreForTheDayForParticipant(results, i, participant);
+                    _logger.LogInformation("Participant {participant.Name}'s score is {participant.Score} so far on day {i}", participant.Name, participant.Score, i);
                 }
+                _logger.LogInformation("End of day: {i}", i);
             }
 
             return scoreParticipant;

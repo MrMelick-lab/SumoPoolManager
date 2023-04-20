@@ -1,14 +1,17 @@
 ﻿using HtmlAgilityPack;
+using Microsoft.Extensions.Logging;
 
 namespace SumoPoolManager
 {
     public class WebScrapper : IWebScrapper
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ILogger<WebScrapper> _logger;
 
-        public WebScrapper(IHttpClientFactory httpClientFactory)
+        public WebScrapper(IHttpClientFactory httpClientFactory, ILogger<WebScrapper> logger)
         {
             _httpClientFactory = httpClientFactory;
+            _logger = logger;
         }
 
         public async Task<List<WinnerOnDay>> GetBashoResults(string bashoId, short day)
@@ -33,7 +36,7 @@ namespace SumoPoolManager
                 doc.LoadHtml(html);
 
                 // Find the HTML element that contains the basho results
-                var resultsNode = doc.DocumentNode.SelectNodes("//table[@class='tk_table']").FirstOrDefault();
+                var resultsNode = doc.DocumentNode.SelectNodes("//table[@class='tk_table']").First();
 
                 //Loop through each bout and get the winner
                 foreach (var boutNode in resultsNode.SelectNodes(".//tr"))
@@ -43,17 +46,18 @@ namespace SumoPoolManager
                         continue;
 
                     var winner = ExtractWinner(boutNode, node);
-
                     results.Add(new WinnerOnDay { Day = i, Name = winner });
                 }
+                var winnersOfTheDay = string.Join(", ", results.Where(w => w.Day == i).Select(w => w.Name).ToList());
+                _logger.LogInformation("Winnders of day {i}: {winnersOfTheDay}", i, winnersOfTheDay);
             }
             return results;
         }
 
         private static string ExtractWinner(HtmlNode boutNode, HtmlNode node)
         {
-            var imgShiro = node.SelectSingleNode(@".//img[@src='img/hoshi_shiro.gif']");
-            var imgFusensho = node.SelectSingleNode(@".//img[@src='img/hoshi_fusensho.gif']");
+            var imgShiro = node.SelectSingleNode(".//img[@src='img/hoshi_shiro.gif']");
+            var imgFusensho = node.SelectSingleNode(".//img[@src='img/hoshi_fusensho.gif']");
             string winner;
             if (imgShiro == null)
             {

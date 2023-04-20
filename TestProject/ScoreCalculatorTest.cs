@@ -1,4 +1,6 @@
-﻿namespace TestProject
+﻿using Microsoft.Extensions.Logging;
+
+namespace TestProject
 {
     public class ScoreCalculatorTest
     {
@@ -8,17 +10,19 @@
         private readonly List<Participant> _participants = new();
         private readonly List<WinnerOnDay> _results202303day1 = new();
         private readonly List<WinnerOnDay> _results202303day15 = new();
+        private readonly ILogger<ScoreCalculator> _logger;
 
-        public ScoreCalculatorTest() 
+        public ScoreCalculatorTest()
         {
             _webScrapper = Substitute.For<IWebScrapper>();
-            _scoreCalculator = new ScoreCalculator(_webScrapper);
+            _logger = Substitute.For<ILogger<ScoreCalculator>>();
+            _scoreCalculator = new ScoreCalculator(_webScrapper, _logger);
             _fixture = new Fixture();
             _participants.Add(new Participant
             {
                 Name = "MrMelick",
                 Rikishis = new List<Rikishi>
-                { 
+                {
                     new Rikishi
                     {
                         Name = "Takakeisho"
@@ -96,8 +100,8 @@
             var results = await _scoreCalculator.CalculateScoreForPoolUntilSelectedDay(_participants, "202303", 1);
 
             results.Should().HaveCount(1);
-            results.ElementAt(0).Name.Should().Be("MrMelick");
-            results.ElementAt(0).Score.Should().Be(4);
+            results[0].Name.Should().Be("MrMelick");
+            results[0].Score.Should().Be(4);
         }
 
         [Fact]
@@ -108,8 +112,8 @@
             var results = await _scoreCalculator.CalculateScoreForPoolUntilSelectedDay(_participants, "202303", 15);
 
             results.Should().HaveCount(1);
-            results.ElementAt(0).Name.Should().Be("MrMelick");
-            results.ElementAt(0).Score.Should().Be(52);
+            results[0].Name.Should().Be("MrMelick");
+            results[0].Score.Should().Be(52);
         }
     }
 }

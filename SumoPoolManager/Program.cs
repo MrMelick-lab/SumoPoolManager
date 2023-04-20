@@ -5,6 +5,7 @@ using Polly;
 using SumoPoolManager;
 using System.Text.Json;
 using ConsoleTables;
+using Microsoft.Extensions.Logging;
 
 using IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
@@ -12,6 +13,11 @@ using IHost host = Host.CreateDefaultBuilder(args)
         services.AddSingleton<IWebScrapper, WebScrapper>();
         services.AddScoped<IScoreCalculator, ScoreCalculator>();
         services.AddHttpClient("SumoBasho").SetHandlerLifetime(TimeSpan.FromMinutes(5)).AddPolicyHandler(GetRetryPolicy());
+    })
+    .ConfigureLogging((_, logging) =>
+    {
+        logging.ClearProviders();
+        logging.AddSimpleConsole(options => options.IncludeScopes = true);
     })
     .Build();
 
@@ -27,16 +33,7 @@ if (validationResult.IsValid())
         return;
 
     var results = await scoreCalculator.CalculateScoreForPoolUntilSelectedDay(pool.Participants, pool.TimestampId, short.Parse(args[1]));
-    var presentationResut = new List<PresentationResult>();
-    foreach (var result in results)
-    {
-        presentationResut.Add(new PresentationResult
-        {
-            Name = result.Name,
-            Score = result.Score
-        });
-    }
-    var orderedPresentionResults = presentationResut.OrderByDescending(x => x.Score).ThenBy(x => x.Name);
+    var orderedPresentionResults = OrderAndMapResulsForPresentation(results);
     ConsoleTable.From(orderedPresentionResults).Write();
 }
 else
@@ -56,4 +53,18 @@ static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
         .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
         .WaitAndRetryAsync(6, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2,
                                                                     retryAttempt)));
+}
+
+static IOrderedEnumerable<PresentationResult> OrderAndMapResulsForPresentation(List<Participant> results)
+{
+    var presentationResut = new List<PresentationResult>();
+    foreach (var result in results)
+    {
+        presentationResut.Add(new PresentationResult
+        {
+            Name = result.Name,
+            Score = result.Score
+        });
+    }
+    return presentationResut.OrderByDescending(x => x.Score).ThenBy(x => x.Name);
 }
