@@ -20,6 +20,15 @@ using IHost host = Host.CreateDefaultBuilder(args)
         logging.AddSimpleConsole(options => options.IncludeScopes = true);
     })
     .Build();
+using var loggerFactory = LoggerFactory.Create(builder =>
+{
+    builder
+        .AddFilter("Microsoft", LogLevel.Warning)
+        .AddFilter("System", LogLevel.Warning)
+        .AddFilter("NonHostConsoleApp.Program", LogLevel.Debug)
+        .AddConsole();
+});
+var logger = loggerFactory.CreateLogger<Program>();
 
 var validator = new ArgsValidator();
 var validationResult = validator.Validate(args);
@@ -40,7 +49,7 @@ else
 {
     foreach (var message in validationResult.Messages)
     {
-        Console.WriteLine(message);
+        logger.LogError("{message}", message);
     }
 }
 
