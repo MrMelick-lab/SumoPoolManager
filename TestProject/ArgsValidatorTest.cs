@@ -2,7 +2,6 @@
 {
     public class ArgsValidatorTest
     {
-        private readonly ArgsValidator _validator = new();
         private readonly Fixture _fixture = new();
         private readonly string _validPath = Path.Combine(Environment.CurrentDirectory, "Pool202301.json");
 
@@ -11,7 +10,7 @@
         {
             var expectedMessages = new List<string> { ArgsValidator.PasDeuxArguments() };
 
-            var result = _validator.Validate(Array.Empty<string>());
+            var result = ArgsValidator.Validate(Array.Empty<string>());
 
             result.IsValid().Should().BeFalse();
             result.Messages.Should().BeEquivalentTo(expectedMessages);
@@ -23,7 +22,7 @@
             var args = new string[] { _fixture.Create<string>() };
             var expectedMessages = new List<string> { ArgsValidator.PasDeuxArguments() };
 
-            var result = _validator.Validate(args);
+            var result = ArgsValidator.Validate(args);
 
             result.IsValid().Should().BeFalse();
             result.Messages.Should().BeEquivalentTo(expectedMessages);
@@ -35,7 +34,7 @@
             var args = _fixture.CreateMany<string>(3).ToArray();
             var expectedMessages = new List<string> { ArgsValidator.PasDeuxArguments() };
 
-            var result = _validator.Validate(args);
+            var result = ArgsValidator.Validate(args);
 
             result.IsValid().Should().BeFalse();
             result.Messages.Should().BeEquivalentTo(expectedMessages);
@@ -47,7 +46,7 @@
             var args = new string[] { " ", "1" };
             var expectedMessages = new List<string> { ArgsValidator.MessageErreurParam1() };
 
-            var result = _validator.Validate(args);
+            var result = ArgsValidator.Validate(args);
 
             result.IsValid().Should().BeFalse();
             result.Messages.Should().BeEquivalentTo(expectedMessages);
@@ -60,7 +59,7 @@
             var args = new string[] { nonExistingFile, "1" };
             var expectedMessages = new List<string> { ArgsValidator.MessageErreurParam1() };
 
-            var result = _validator.Validate(args);
+            var result = ArgsValidator.Validate(args);
 
             result.IsValid().Should().BeFalse();
             result.Messages.Should().BeEquivalentTo(expectedMessages);
@@ -73,7 +72,7 @@
             var args = new string[] { nonExistingFile, "1" };
             var expectedMessages = new List<string> { ArgsValidator.MessageErreurParam1() };
 
-            var result = _validator.Validate(args);
+            var result = ArgsValidator.Validate(args);
 
             result.IsValid().Should().BeFalse();
             result.Messages.Should().BeEquivalentTo(expectedMessages);
@@ -86,7 +85,7 @@
             var args = new string[] { nonExistingFile, "1" };
             var expectedMessages = new List<string> { ArgsValidator.MessageErreurParam1() };
 
-            var result = _validator.Validate(args);
+            var result = ArgsValidator.Validate(args);
 
             result.IsValid().Should().BeFalse();
             result.Messages.Should().BeEquivalentTo(expectedMessages);
@@ -98,7 +97,7 @@
             var args = new string[] { _validPath, "  " };
             var expectedMessages = new List<string> { ArgsValidator.MessageErreurParam2() };
 
-            var result = _validator.Validate(args);
+            var result = ArgsValidator.Validate(args);
 
             result.IsValid().Should().BeFalse();
             result.Messages.Should().BeEquivalentTo(expectedMessages);
@@ -110,7 +109,7 @@
             var args = new string[] { _validPath, _fixture.Create<string>() };
             var expectedMessages = new List<string> { ArgsValidator.MessageErreurParam2() };
 
-            var result = _validator.Validate(args);
+            var result = ArgsValidator.Validate(args);
 
             result.IsValid().Should().BeFalse();
             result.Messages.Should().BeEquivalentTo(expectedMessages);
@@ -124,7 +123,7 @@
             var args = new string[] { _validPath, param2 };
             var expectedMessages = new List<string> { ArgsValidator.MessageErreurParam2() };
 
-            var result = _validator.Validate(args);
+            var result = ArgsValidator.Validate(args);
 
             result.IsValid().Should().BeFalse();
             result.Messages.Should().BeEquivalentTo(expectedMessages);
@@ -135,11 +134,10 @@
         {
             var args = new string[] { _validPath, "4" };
 
-            var result = _validator.Validate(args);
+            var result = ArgsValidator.Validate(args);
 
             result.IsValid().Should().BeTrue();
             result.Messages.Should().BeEmpty();
         }
-
     }
 }

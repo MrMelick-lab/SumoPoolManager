@@ -30,8 +30,7 @@ using var loggerFactory = LoggerFactory.Create(builder =>
 });
 var logger = loggerFactory.CreateLogger<Program>();
 
-var validator = new ArgsValidator();
-var validationResult = validator.Validate(args);
+var validationResult = ArgsValidator.Validate(args);
 
 if (validationResult.IsValid())
 {

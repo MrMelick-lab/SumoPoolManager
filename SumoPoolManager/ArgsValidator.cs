@@ -5,7 +5,7 @@ namespace SumoPoolManager
     /// <summary>
     /// Service class to do the all the validation of the inputs
     /// </summary>
-    public class ArgsValidator
+    public static class ArgsValidator
     {
         public static string MessageErreurParam1() => "Le premier paramètre doit être un chemin valide vers un fichier .json dans le format attendu";
         public static string MessageErreurParam2() => "Le deuxième paramètre doit être un chiffre entre 1 et 15";
@@ -16,7 +16,7 @@ namespace SumoPoolManager
         /// </summary>
         /// <param name="args">The parameters passed to the programs as an array of string</param>
         /// <returns>A list of error messages in the ValidationResult object if any of the validations fail.</returns>
-        public ValidationResult Validate(string[] args)
+        public static ValidationResult Validate(string[] args)
         {
             var result = new ValidationResult();
 

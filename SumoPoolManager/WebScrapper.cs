@@ -68,12 +68,12 @@ namespace SumoPoolManager
         /// <summary>
         /// <para>
         /// Extract the name of the winner of a bout from the HTML of the results page for a given day.
-        /// hecks if there is an HTML image element with the src attribute equal to 'img/hoshi_shiro.gif' in the node object. If there is, it means the winner is the East wrestler, so it checks if there is also an HTML image element with the src attribute equal to 'img/hoshi_fusensho.gif'. If there is, it means the winner won by default, so the function returns the name of the West wrestler. 
+        /// hecks if there is an HTML image element with the src attribute equal to 'img/hoshi_shiro.gif' in the node object. If there is, it means the winner is the East wrestler, so it checks if there is also an HTML image element with the src attribute equal to 'img/hoshi_fusensho.gif'. If there is, it means the winner won by default, so the function returns the name of the West wrestler.
         /// If there isn't, the function returns the name of the East wrestler.
         /// </para>
         /// <para>
         /// If there is no image element with the src attribute equal to 'img/hoshi_shiro.gif' in the node object, it means the winner is the West wrestler, so it checks if there is an image element with the src attribute equal to 'img/hoshi_fusensho.gif'.
-        /// If there is, it means the winner won by default, so the function returns the name of the East wrestler. 
+        /// If there is, it means the winner won by default, so the function returns the name of the East wrestler.
         /// If there isn't, the function returns the name of the West wrestler.
         /// </para>
         /// </summary>
