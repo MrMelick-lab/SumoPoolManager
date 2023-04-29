@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
+using SumoPoolManager.Models;
 
-namespace SumoPoolManager
+namespace SumoPoolManager.Services
 {
     /// <summary>
     /// Service class used to calcute the score using a list of particiants and the results obtained from the injected WebScrapper
@@ -29,7 +30,7 @@ namespace SumoPoolManager
             if (participantsWithoutScore?.Any() != true || string.IsNullOrWhiteSpace(bashoId) || day < 1 || day > 15)
                 return scoreParticipant;
 
-            var results =  await _webScrapper.GetBashoResults(bashoId, day);
+            var results = await _webScrapper.GetBashoResults(bashoId, day);
 
             if (!results.Any())
                 return scoreParticipant;

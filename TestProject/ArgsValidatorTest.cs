@@ -1,4 +1,6 @@
-﻿namespace TestProject
+﻿using SumoPoolManager.Services;
+
+namespace TestProject
 {
     public class ArgsValidatorTest
     {

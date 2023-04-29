@@ -1,4 +1,6 @@
 using Microsoft.Extensions.Logging;
+using SumoPoolManager.Models;
+using SumoPoolManager.Services;
 
 namespace TestProject
 {

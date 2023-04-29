@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
+using SumoPoolManager.Models;
 
-namespace SumoPoolManager
+namespace SumoPoolManager.Services
 {
     /// <summary>
     /// Service class to do the all the validation of the inputs

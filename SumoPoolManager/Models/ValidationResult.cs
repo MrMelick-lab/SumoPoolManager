@@ -1,4 +1,4 @@
-﻿namespace SumoPoolManager
+﻿namespace SumoPoolManager.Models
 {
     public class ValidationResult
     {

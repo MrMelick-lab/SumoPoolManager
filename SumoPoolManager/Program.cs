@@ -2,10 +2,11 @@
 using Microsoft.Extensions.Hosting;
 using Polly.Extensions.Http;
 using Polly;
-using SumoPoolManager;
 using System.Text.Json;
 using ConsoleTables;
 using Microsoft.Extensions.Logging;
+using SumoPoolManager.Models;
+using SumoPoolManager.Services;
 
 using IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>

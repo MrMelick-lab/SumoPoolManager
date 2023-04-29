@@ -1,7 +1,8 @@
 ﻿using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
+using SumoPoolManager.Models;
 
-namespace SumoPoolManager
+namespace SumoPoolManager.Services
 {
     /// <summary>
     /// Service class wich goes to web scrappe the results of a particular basho up to a day
@@ -27,7 +28,7 @@ namespace SumoPoolManager
         /// <returns>A list of the winner of each day up to the day parameter</returns>
         public async Task<List<WinnerOnDay>> GetBashoResults(string bashoId, short day)
         {
-            if(string.IsNullOrWhiteSpace(bashoId) || day < 1 || day > 15)
+            if (string.IsNullOrWhiteSpace(bashoId) || day < 1 || day > 15)
                 return new List<WinnerOnDay>();
 
             var results = new List<WinnerOnDay>();

@@ -1,4 +1,6 @@
-﻿namespace SumoPoolManager
+﻿using SumoPoolManager.Models;
+
+namespace SumoPoolManager.Services
 {
     public interface IScoreCalculator
     {
