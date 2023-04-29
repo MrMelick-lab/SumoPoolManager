@@ -3,6 +3,9 @@ using Microsoft.Extensions.Logging;
 
 namespace SumoPoolManager
 {
+    /// <summary>
+    /// Service class wich goes to web scrappe the results of a particular basho up to a day
+    /// </summary>
     public class WebScrapper : IWebScrapper
     {
         private readonly IHttpClientFactory _httpClientFactory;
@@ -14,6 +17,14 @@ namespace SumoPoolManager
             _logger = logger;
         }
 
+        /// <summary>
+        /// Get the results of a Sumo Basho tournament up to and including a given day, by scraping a website.
+        /// Then, it initializes a list of WinnerOnDay objects called results and a HttpClient object called client.
+        /// It then loops through each day up to and including the selected day, and for each day, it scrapes the results page for that day, extracts the winner(s) of each bout, and adds them to the results list as a WinnerOnDay object
+        /// </summary>
+        /// <param name="bashoId">The identifier of a sumo wrestling tournament with format YYYYMM. So the basho of new year basho of 2023 wich happens in januray have the id 202301</param>
+        /// <param name="day">Between 1 and 15 the limit yp to wich webscrappe the winners/param>
+        /// <returns>A list of the winner of each day up to the day parameter</returns>
         public async Task<List<WinnerOnDay>> GetBashoResults(string bashoId, short day)
         {
             if(string.IsNullOrWhiteSpace(bashoId) || day < 1 || day > 15)
@@ -49,11 +60,26 @@ namespace SumoPoolManager
                     results.Add(new WinnerOnDay { Day = i, Name = winner });
                 }
                 var winnersOfTheDay = string.Join(", ", results.Where(w => w.Day == i).Select(w => w.Name).ToList());
-                _logger.LogInformation("Winnders of day {i}: {winnersOfTheDay}", i, winnersOfTheDay);
+                _logger.LogInformation("Winners of day {i}: {winnersOfTheDay}", i, winnersOfTheDay);
             }
             return results;
         }
 
+        /// <summary>
+        /// <para>
+        /// Extract the name of the winner of a bout from the HTML of the results page for a given day.
+        /// hecks if there is an HTML image element with the src attribute equal to 'img/hoshi_shiro.gif' in the node object. If there is, it means the winner is the East wrestler, so it checks if there is also an HTML image element with the src attribute equal to 'img/hoshi_fusensho.gif'. If there is, it means the winner won by default, so the function returns the name of the West wrestler. 
+        /// If there isn't, the function returns the name of the East wrestler.
+        /// </para>
+        /// <para>
+        /// If there is no image element with the src attribute equal to 'img/hoshi_shiro.gif' in the node object, it means the winner is the West wrestler, so it checks if there is an image element with the src attribute equal to 'img/hoshi_fusensho.gif'.
+        /// If there is, it means the winner won by default, so the function returns the name of the East wrestler. 
+        /// If there isn't, the function returns the name of the West wrestler.
+        /// </para>
+        /// </summary>
+        /// <param name="boutNode">HtmlNode object representing the HTML element that contains the information about the bout</param>
+        /// <param name="node">HtmlNode object representing the HTML element that contains the winner of the bout.</param>
+        /// <returns>The name of the winner of the bout as a string</returns>
         private static string ExtractWinner(HtmlNode boutNode, HtmlNode node)
         {
             var imgShiro = node.SelectSingleNode(".//img[@src='img/hoshi_shiro.gif']");

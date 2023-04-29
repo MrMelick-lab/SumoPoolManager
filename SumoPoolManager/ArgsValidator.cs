@@ -2,12 +2,20 @@
 
 namespace SumoPoolManager
 {
+    /// <summary>
+    /// Service class to do the all the validation of the inputs
+    /// </summary>
     public class ArgsValidator
     {
         public static string MessageErreurParam1() => "Le premier paramètre doit être un chemin valide vers un fichier .json dans le format attendu";
         public static string MessageErreurParam2() => "Le deuxième paramètre doit être un chiffre entre 1 et 15";
         public static string PasDeuxArguments() => "Il doit y avoir 2 argument, un chemin valide vers un fichier .json et un chiffre entre 1 et 15";
 
+        /// <summary>
+        ///  Performs several validations on the input arguments and returns a list of error messages in the ValidationResult object if any of the validations fail.
+        /// </summary>
+        /// <param name="args">The parameters passed to the programs as an array of string</param>
+        /// <returns>A list of error messages in the ValidationResult object if any of the validations fail.</returns>
         public ValidationResult Validate(string[] args)
         {
             var result = new ValidationResult();
@@ -36,6 +44,8 @@ namespace SumoPoolManager
                 return result;
             }
 
+            //tries to deserialize the JSON file into a Pool object and checks if the Participants list is not empty and if the TimestampId property is not null or empty.
+            //If it fails any of these checks, it returns an error message.
             try
             {
                 using var poolStream = File.OpenRead(args[0]);

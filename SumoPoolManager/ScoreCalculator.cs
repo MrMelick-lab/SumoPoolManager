@@ -2,6 +2,9 @@
 
 namespace SumoPoolManager
 {
+    /// <summary>
+    /// Service class used to calcute the score using a list of particiants and the results obtained from the injected WebScrapper
+    /// </summary>
     public class ScoreCalculator : IScoreCalculator
     {
         private readonly IWebScrapper _webScrapper;
@@ -13,6 +16,13 @@ namespace SumoPoolManager
             _logger = logger;
         }
 
+        /// <summary>
+        /// This function takes a list of Participants, a bashoId (which identifies a sumo wrestling tournament), and a day (between 1 and 15), and calculates the scores of the participants up to and including the selected day.
+        /// </summary>
+        /// <param name="participantsWithoutScore">The pool particiants who have not their scores calculated yet</param>
+        /// <param name="bashoId">The identifier of a sumo wrestling tournament with format YYYYMM. So the basho of new year basho of 2023 wich happens in januray have the id 202301</param>
+        /// <param name="day">Between 1 and 15, the last of score calculation</param>
+        /// <returns>The participants with their scores calculated</returns>
         public async Task<List<Participant>> CalculateScoreForPoolUntilSelectedDay(List<Participant> participantsWithoutScore, string bashoId, short day)
         {
             var scoreParticipant = new List<Participant>();
