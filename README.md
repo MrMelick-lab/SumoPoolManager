@@ -64,9 +64,52 @@ _Below is an example of how you can instruct your audience on installing and set
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+To use give a valid path to a json file describing the Pool and the day up to calculate the score, it goes from 1 to 15.
+The timestamp id is the identifier of a sumo wrestling tournament with the format YYYYMM. So the basho of new year basho of 2023 wich happens in januray have the id 202301
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+json schema for the input file in argument:
+{
+  "type": "object",
+  "properties": {
+    "TimestampId": {
+      "type": "string"
+    },
+    "Participants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string"
+          },
+          "Rikishis": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Name": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "Name"
+              ]
+            }
+          }
+        },
+        "required": [
+          "Name",
+          "Rikishis"
+        ]
+      }
+    }
+  },
+  "required": [
+    "TimestampId",
+    "Participants"
+  ]
+}
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -75,6 +118,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 - [ ] Add GUI
+- [ ] Add file exportation of the result
 
 See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
 
@@ -103,7 +147,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distributed under the MIT License.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -111,8 +155,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <!-- CONTACT -->
 ## Contact
-
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
 
 Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
 
