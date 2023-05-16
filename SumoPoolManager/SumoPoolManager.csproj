@@ -6,6 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <UserSecretsId>9b0e1cea-5383-4191-8837-b9c434f267d2</UserSecretsId>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>sumo</ToolCommandName>
+    <PackageOutputPath>./nupkg</PackageOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
