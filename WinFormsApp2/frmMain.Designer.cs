@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             btnOuvrilPool = new Button();
+            fileDialog = new OpenFileDialog();
             SuspendLayout();
             // 
             // btnOuvrilPool
@@ -39,6 +40,11 @@
             btnOuvrilPool.TabIndex = 0;
             btnOuvrilPool.Text = "ouvrir pool";
             btnOuvrilPool.UseVisualStyleBackColor = true;
+            btnOuvrilPool.Click += btnOuvrilPool_Click;
+            // 
+            // fileDialog
+            // 
+            fileDialog.FileName = "fileDialog";
             // 
             // frmMain
             // 
@@ -54,5 +60,6 @@
         #endregion
 
         private Button btnOuvrilPool;
+        private OpenFileDialog fileDialog;
     }
 }
