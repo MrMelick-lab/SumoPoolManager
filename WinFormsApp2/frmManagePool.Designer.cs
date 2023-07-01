@@ -126,7 +126,7 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "frmManagePool";
-            Text = "frmManagePool";
+            Text = "Calculateur de pool";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);
