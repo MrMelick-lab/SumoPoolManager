@@ -26,7 +26,7 @@ namespace SumoPoolUI
                 Convert.ToInt16(cboJour.SelectedItem));
             var orderedResults = resultatsNotOrdrered.OrderByDescending(x => x.Score).ThenBy(x => x.Name).ToList();
             listScore.Items.Clear();
-            foreach (var particiant in Pool.Participants)
+            foreach (var particiant in orderedResults)
             {
                 AddItem(particiant.Name, particiant.Score);
             }
