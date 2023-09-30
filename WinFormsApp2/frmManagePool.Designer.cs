@@ -37,6 +37,7 @@
             ouvrirUnPoolCsvToolStripMenuItem = new ToolStripMenuItem();
             listScore = new ListView();
             txtPool = new TextBox();
+            lblCalculEnCours = new Label();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -111,11 +112,22 @@
             txtPool.Size = new Size(116, 23);
             txtPool.TabIndex = 8;
             // 
+            // lblCalculEnCours
+            // 
+            lblCalculEnCours.AutoSize = true;
+            lblCalculEnCours.Location = new Point(230, 24);
+            lblCalculEnCours.Name = "lblCalculEnCours";
+            lblCalculEnCours.Size = new Size(145, 15);
+            lblCalculEnCours.TabIndex = 9;
+            lblCalculEnCours.Text = "Calcul du score en cours...";
+            lblCalculEnCours.Visible = false;
+            // 
             // frmManagePool
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 680);
+            Controls.Add(lblCalculEnCours);
             Controls.Add(txtPool);
             Controls.Add(listScore);
             Controls.Add(btnCalculerScore);
@@ -141,5 +153,6 @@
         private ListView listScore;
         private ToolStripMenuItem ouvrirUnPoolCsvToolStripMenuItem;
         private TextBox txtPool;
+        private Label lblCalculEnCours;
     }
 }

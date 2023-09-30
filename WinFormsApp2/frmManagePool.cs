@@ -1,8 +1,8 @@
 ﻿using SumoPoolManager.Models;
-using System.Text.Json;
 using SumoPoolManager.Services;
 using CsvHelper;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace SumoPoolUI
 {
@@ -23,11 +23,14 @@ namespace SumoPoolUI
 
         private async void btnCalculerScore_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtPool.Text))
+            var validationResult = Validation();
+            if (!validationResult.IsValid())
             {
-                MessageBox.Show("Veuilez entrer un identifiant de pool valide soit annéjour genre 202309 pour le pool de sepemtre 2023", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Join(Environment.NewLine, validationResult.Messages), "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            Cursor = Cursors.WaitCursor;
+            lblCalculEnCours.Visible = true;
             Pool.TimestampId = txtPool.Text;
             var resultatsNotOrdrered = await ScoreCalculator.CalculateScoreForPoolUntilSelectedDay(
                 Pool.Participants,
@@ -40,6 +43,8 @@ namespace SumoPoolUI
                 AddItem(particiant.Name, particiant.Score, particiant.Rikishis);
             }
             listScore.Refresh();
+            Cursor = Cursors.Default;
+            lblCalculEnCours.Visible = false;
         }
         private void AddItem(string name, int score, List<Rikishi> rikishis)
         {
@@ -82,5 +87,23 @@ namespace SumoPoolUI
                 }
             }
         }
+
+        private ValidationResult Validation()
+        {
+            var result = new ValidationResult();
+            if(!ValidPoolId().IsMatch(txtPool.Text))
+                result.Messages.Add("Veuilez entrer un identifiant de pool valide soit annéjour genre 202309 pour le pool de sepemtre 2023");
+
+            if (Pool == null || (!Pool.Participants.Any()))
+                result.Messages.Add("Veuillez sélection un fichier csv qui contient au moins un participant");
+
+            if(cboJour.SelectedItem is null)
+                result.Messages.Add("Veuillez sélectionner un jour");
+
+            return result;
+        }
+
+        [GeneratedRegex("^[0-9]{6}$")]
+        private static partial Regex ValidPoolId();
     }
 }
