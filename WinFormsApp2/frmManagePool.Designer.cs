@@ -28,32 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            lblFileName = new Label();
             cboJour = new ComboBox();
             lblIdPool = new Label();
             btnCalculerScore = new Button();
             fileDialogPool = new OpenFileDialog();
             menuStrip1 = new MenuStrip();
             Menu = new ToolStripMenuItem();
-            ouvrirUnPoolToolStripMenuItem = new ToolStripMenuItem();
+            ouvrirUnPoolCsvToolStripMenuItem = new ToolStripMenuItem();
             listScore = new ListView();
+            txtPool = new TextBox();
+            lblCalculEnCours = new Label();
             menuStrip1.SuspendLayout();
             SuspendLayout();
-            // 
-            // lblFileName
-            // 
-            lblFileName.AutoSize = true;
-            lblFileName.Location = new Point(105, 57);
-            lblFileName.Name = "lblFileName";
-            lblFileName.Size = new Size(38, 15);
-            lblFileName.TabIndex = 0;
-            lblFileName.Text = "label1";
             // 
             // cboJour
             // 
             cboJour.FormattingEnabled = true;
             cboJour.Items.AddRange(new object[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" });
-            cboJour.Location = new Point(342, 49);
+            cboJour.Location = new Point(381, 46);
             cboJour.Name = "cboJour";
             cboJour.Size = new Size(121, 23);
             cboJour.TabIndex = 2;
@@ -61,7 +53,7 @@
             // lblIdPool
             // 
             lblIdPool.AutoSize = true;
-            lblIdPool.Location = new Point(52, 57);
+            lblIdPool.Location = new Point(31, 57);
             lblIdPool.Name = "lblIdPool";
             lblIdPool.Size = new Size(34, 15);
             lblIdPool.TabIndex = 4;
@@ -69,7 +61,7 @@
             // 
             // btnCalculerScore
             // 
-            btnCalculerScore.Location = new Point(163, 49);
+            btnCalculerScore.Location = new Point(202, 46);
             btnCalculerScore.Name = "btnCalculerScore";
             btnCalculerScore.Size = new Size(173, 23);
             btnCalculerScore.TabIndex = 5;
@@ -92,37 +84,55 @@
             // 
             // Menu
             // 
-            Menu.DropDownItems.AddRange(new ToolStripItem[] { ouvrirUnPoolToolStripMenuItem });
+            Menu.DropDownItems.AddRange(new ToolStripItem[] { ouvrirUnPoolCsvToolStripMenuItem });
             Menu.Name = "Menu";
             Menu.Size = new Size(50, 20);
             Menu.Text = "Menu";
             // 
-            // ouvrirUnPoolToolStripMenuItem
+            // ouvrirUnPoolCsvToolStripMenuItem
             // 
-            ouvrirUnPoolToolStripMenuItem.Name = "ouvrirUnPoolToolStripMenuItem";
-            ouvrirUnPoolToolStripMenuItem.Size = new Size(151, 22);
-            ouvrirUnPoolToolStripMenuItem.Text = "Ouvrir un pool";
-            ouvrirUnPoolToolStripMenuItem.Click += ouvrirUnPoolToolStripMenuItem_Click;
+            ouvrirUnPoolCsvToolStripMenuItem.Name = "ouvrirUnPoolCsvToolStripMenuItem";
+            ouvrirUnPoolCsvToolStripMenuItem.Size = new Size(171, 22);
+            ouvrirUnPoolCsvToolStripMenuItem.Text = "Ouvrir un pool csv";
+            ouvrirUnPoolCsvToolStripMenuItem.Click += ouvrirUnPoolCsvToolStripMenuItem_Click;
             // 
             // listScore
             // 
             listScore.HeaderStyle = ColumnHeaderStyle.Nonclickable;
             listScore.Location = new Point(22, 75);
             listScore.Name = "listScore";
-            listScore.Size = new Size(766, 370);
+            listScore.Size = new Size(766, 593);
             listScore.TabIndex = 7;
             listScore.UseCompatibleStateImageBehavior = false;
+            // 
+            // txtPool
+            // 
+            txtPool.Location = new Point(71, 49);
+            txtPool.Name = "txtPool";
+            txtPool.Size = new Size(116, 23);
+            txtPool.TabIndex = 8;
+            // 
+            // lblCalculEnCours
+            // 
+            lblCalculEnCours.AutoSize = true;
+            lblCalculEnCours.Location = new Point(230, 24);
+            lblCalculEnCours.Name = "lblCalculEnCours";
+            lblCalculEnCours.Size = new Size(145, 15);
+            lblCalculEnCours.TabIndex = 9;
+            lblCalculEnCours.Text = "Calcul du score en cours...";
+            lblCalculEnCours.Visible = false;
             // 
             // frmManagePool
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 473);
+            ClientSize = new Size(800, 680);
+            Controls.Add(lblCalculEnCours);
+            Controls.Add(txtPool);
             Controls.Add(listScore);
             Controls.Add(btnCalculerScore);
             Controls.Add(lblIdPool);
             Controls.Add(cboJour);
-            Controls.Add(lblFileName);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "frmManagePool";
@@ -134,15 +144,15 @@
         }
 
         #endregion
-
-        private Label lblFileName;
         private ComboBox cboJour;
         private Label lblIdPool;
         private Button btnCalculerScore;
         private OpenFileDialog fileDialogPool;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem Menu;
-        private ToolStripMenuItem ouvrirUnPoolToolStripMenuItem;
         private ListView listScore;
+        private ToolStripMenuItem ouvrirUnPoolCsvToolStripMenuItem;
+        private TextBox txtPool;
+        private Label lblCalculEnCours;
     }
 }
