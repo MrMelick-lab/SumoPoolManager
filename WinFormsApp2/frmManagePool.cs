@@ -9,6 +9,7 @@ namespace SumoPoolUI
     public partial class frmManagePool : Form
     {
         public Pool? Pool { get; set; } = new();
+        public List<InjuredRikishi> InjuredRikishis { get; set; } = new();
 
         private readonly IScoreCalculator ScoreCalculator;
         public frmManagePool(IScoreCalculator scoreCalculator)
@@ -19,11 +20,14 @@ namespace SumoPoolUI
             listScore.Columns.Add("Name", 120);
             listScore.Columns.Add("Score", 50);
             listScore.Columns.Add("Rikishi", 550);
+            lstviewBlesse.View = View.Details;
+            lstviewBlesse.Columns.Add("Name", 120);
+            lstviewBlesse.Columns.Add("Exited day", 50);
         }
 
         private async void btnCalculerScore_Click(object sender, EventArgs e)
         {
-            var validationResult = Validation();
+            var validationResult = ValidationCalculPool();
             if (!validationResult.IsValid())
             {
                 MessageBox.Show(string.Join(Environment.NewLine, validationResult.Messages), "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -35,18 +39,18 @@ namespace SumoPoolUI
             var resultatsNotOrdrered = await ScoreCalculator.CalculateScoreForPoolUntilSelectedDay(
                 Pool.Participants,
                 Pool.TimestampId,
-                Convert.ToInt16(cboJour.SelectedItem), new List<InjuredRikishi>());
+                Convert.ToInt16(cboJour.SelectedItem), InjuredRikishis);
             var orderedResults = resultatsNotOrdrered.OrderByDescending(x => x.Score).ThenBy(x => x.Name).ToList();
             listScore.Items.Clear();
             foreach (var particiant in orderedResults)
             {
-                AddItem(particiant.Name, particiant.Score, particiant.Rikishis);
+                AddItemRikishi(particiant.Name, particiant.Score, particiant.Rikishis);
             }
             listScore.Refresh();
             Cursor = Cursors.Default;
             lblCalculEnCours.Visible = false;
         }
-        private void AddItem(string name, int score, List<Rikishi> rikishis)
+        private void AddItemRikishi(string name, int score, List<Rikishi> rikishis)
         {
             var item = new ListViewItem(name);
             item.SubItems.Add(score.ToString());
@@ -87,28 +91,62 @@ namespace SumoPoolUI
                         }
                     };
                     Pool.Participants.Add(participant);
-                    AddItem(participant.Name, participant.Score, participant.Rikishis);
+                    AddItemRikishi(participant.Name, participant.Score, participant.Rikishis);
                     listScore.Refresh();
                 }
             }
         }
 
-        private ValidationResult Validation()
+        private ValidationResult ValidationCalculPool()
         {
             var result = new ValidationResult();
-            if(!ValidPoolId().IsMatch(txtPool.Text))
+            if (!ValidPoolId().IsMatch(txtPool.Text))
                 result.Messages.Add("Veuilez entrer un identifiant de pool valide soit annéjour genre 202309 pour le pool de sepemtre 2023");
 
             if (Pool == null || (!Pool.Participants.Any()))
                 result.Messages.Add("Veuillez sélection un fichier csv qui contient au moins un participant");
 
-            if(cboJour.SelectedItem is null)
+            if (cboJour.SelectedItem is null)
                 result.Messages.Add("Veuillez sélectionner un jour");
+
+            return result;
+        }
+
+        private ValidationResult ValidationEntrerBlesse()
+        {
+            var result = new ValidationResult();
+
+            if (cboJourSortieBlesse.SelectedItem is null)
+                result.Messages.Add("Veuillez sélectionner un jour de sortie");
+
+            if (string.IsNullOrWhiteSpace(txtRikishiBlesse.Text))
+                result.Messages.Add("Veuillez entré un nom de rikishi blessé");
 
             return result;
         }
 
         [GeneratedRegex("^[0-9]{6}$")]
         private static partial Regex ValidPoolId();
+
+        private void btnEntrerBlesse_Click(object sender, EventArgs e)
+        {
+            var validationResult = ValidationEntrerBlesse();
+            if (!validationResult.IsValid())
+            {
+                MessageBox.Show(string.Join(Environment.NewLine, validationResult.Messages), "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var injuredRikishi = new InjuredRikishi
+            {
+                Name = txtRikishiBlesse.Text,
+                DayOfExit = Convert.ToInt16(cboJourSortieBlesse.SelectedItem)
+            };
+
+            InjuredRikishis.Add(injuredRikishi);
+            var item = new ListViewItem(injuredRikishi.Name);
+            item.SubItems.Add(injuredRikishi.DayOfExit.ToString());
+            lstviewBlesse.Items.Add(item);
+        }
     }
 }

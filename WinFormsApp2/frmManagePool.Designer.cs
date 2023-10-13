@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             cboJour = new ComboBox();
             lblIdPool = new Label();
             btnCalculerScore = new Button();
@@ -38,7 +39,21 @@
             listScore = new ListView();
             txtPool = new TextBox();
             lblCalculEnCours = new Label();
+            lblSectionBlesse = new Label();
+            panel1 = new Panel();
+            lstviewBlesse = new ListView();
+            btnChargerListeBlesse = new Button();
+            lblListeBlesse = new Label();
+            btnSauvegarderBlesse = new Button();
+            lblJourBlesse = new Label();
+            lblRikishiBlesseEnter = new Label();
+            cboJourSortieBlesse = new ComboBox();
+            txtRikishiBlesse = new TextBox();
+            btnEntrerBlesse = new Button();
+            injuredRikishiBindingSource = new BindingSource(components);
             menuStrip1.SuspendLayout();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)injuredRikishiBindingSource).BeginInit();
             SuspendLayout();
             // 
             // cboJour
@@ -78,7 +93,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { Menu });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(800, 24);
+            menuStrip1.Size = new Size(1277, 24);
             menuStrip1.TabIndex = 6;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -122,11 +137,121 @@
             lblCalculEnCours.Text = "Calcul du score en cours...";
             lblCalculEnCours.Visible = false;
             // 
+            // lblSectionBlesse
+            // 
+            lblSectionBlesse.AutoSize = true;
+            lblSectionBlesse.Location = new Point(3, 0);
+            lblSectionBlesse.Name = "lblSectionBlesse";
+            lblSectionBlesse.Size = new Size(80, 15);
+            lblSectionBlesse.TabIndex = 11;
+            lblSectionBlesse.Text = "section blessé";
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(lstviewBlesse);
+            panel1.Controls.Add(btnChargerListeBlesse);
+            panel1.Controls.Add(lblListeBlesse);
+            panel1.Controls.Add(btnSauvegarderBlesse);
+            panel1.Controls.Add(lblJourBlesse);
+            panel1.Controls.Add(lblRikishiBlesseEnter);
+            panel1.Controls.Add(cboJourSortieBlesse);
+            panel1.Controls.Add(txtRikishiBlesse);
+            panel1.Controls.Add(btnEntrerBlesse);
+            panel1.Controls.Add(lblSectionBlesse);
+            panel1.Location = new Point(794, 75);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(471, 593);
+            panel1.TabIndex = 12;
+            // 
+            // lstviewBlesse
+            // 
+            lstviewBlesse.Location = new Point(3, 128);
+            lstviewBlesse.Name = "lstviewBlesse";
+            lstviewBlesse.Size = new Size(465, 462);
+            lstviewBlesse.TabIndex = 21;
+            lstviewBlesse.UseCompatibleStateImageBehavior = false;
+            // 
+            // btnChargerListeBlesse
+            // 
+            btnChargerListeBlesse.Location = new Point(35, 84);
+            btnChargerListeBlesse.Name = "btnChargerListeBlesse";
+            btnChargerListeBlesse.Size = new Size(416, 23);
+            btnChargerListeBlesse.TabIndex = 20;
+            btnChargerListeBlesse.Text = "Charger liste blessé";
+            btnChargerListeBlesse.UseVisualStyleBackColor = true;
+            // 
+            // lblListeBlesse
+            // 
+            lblListeBlesse.AutoSize = true;
+            lblListeBlesse.Location = new Point(196, 110);
+            lblListeBlesse.Name = "lblListeBlesse";
+            lblListeBlesse.Size = new Size(100, 15);
+            lblListeBlesse.TabIndex = 19;
+            lblListeBlesse.Text = "Liste des blessé(s)";
+            // 
+            // btnSauvegarderBlesse
+            // 
+            btnSauvegarderBlesse.Location = new Point(33, 55);
+            btnSauvegarderBlesse.Name = "btnSauvegarderBlesse";
+            btnSauvegarderBlesse.Size = new Size(418, 23);
+            btnSauvegarderBlesse.TabIndex = 18;
+            btnSauvegarderBlesse.Text = "Sauvegarder liste blessé";
+            btnSauvegarderBlesse.UseVisualStyleBackColor = true;
+            // 
+            // lblJourBlesse
+            // 
+            lblJourBlesse.AutoSize = true;
+            lblJourBlesse.Location = new Point(323, 9);
+            lblJourBlesse.Name = "lblJourBlesse";
+            lblJourBlesse.Size = new Size(105, 15);
+            lblJourBlesse.TabIndex = 16;
+            lblJourBlesse.Text = "Jour déclaré blessé";
+            // 
+            // lblRikishiBlesseEnter
+            // 
+            lblRikishiBlesseEnter.AutoSize = true;
+            lblRikishiBlesseEnter.Location = new Point(212, 9);
+            lblRikishiBlesseEnter.Name = "lblRikishiBlesseEnter";
+            lblRikishiBlesseEnter.Size = new Size(34, 15);
+            lblRikishiBlesseEnter.TabIndex = 15;
+            lblRikishiBlesseEnter.Text = "Nom";
+            // 
+            // cboJourSortieBlesse
+            // 
+            cboJourSortieBlesse.FormattingEnabled = true;
+            cboJourSortieBlesse.Items.AddRange(new object[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" });
+            cboJourSortieBlesse.Location = new Point(310, 28);
+            cboJourSortieBlesse.Name = "cboJourSortieBlesse";
+            cboJourSortieBlesse.Size = new Size(141, 23);
+            cboJourSortieBlesse.TabIndex = 14;
+            // 
+            // txtRikishiBlesse
+            // 
+            txtRikishiBlesse.Location = new Point(148, 27);
+            txtRikishiBlesse.Name = "txtRikishiBlesse";
+            txtRikishiBlesse.Size = new Size(156, 23);
+            txtRikishiBlesse.TabIndex = 13;
+            // 
+            // btnEntrerBlesse
+            // 
+            btnEntrerBlesse.Location = new Point(33, 26);
+            btnEntrerBlesse.Name = "btnEntrerBlesse";
+            btnEntrerBlesse.Size = new Size(109, 23);
+            btnEntrerBlesse.TabIndex = 12;
+            btnEntrerBlesse.Text = "Entrer un blessé";
+            btnEntrerBlesse.UseVisualStyleBackColor = true;
+            btnEntrerBlesse.Click += btnEntrerBlesse_Click;
+            // 
+            // injuredRikishiBindingSource
+            // 
+            injuredRikishiBindingSource.DataSource = typeof(SumoPoolManager.Models.InjuredRikishi);
+            // 
             // frmManagePool
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 680);
+            ClientSize = new Size(1277, 680);
+            Controls.Add(panel1);
             Controls.Add(lblCalculEnCours);
             Controls.Add(txtPool);
             Controls.Add(listScore);
@@ -139,6 +264,9 @@
             Text = "Calculateur de pool";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)injuredRikishiBindingSource).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -154,5 +282,17 @@
         private ToolStripMenuItem ouvrirUnPoolCsvToolStripMenuItem;
         private TextBox txtPool;
         private Label lblCalculEnCours;
+        private Label lblSectionBlesse;
+        private Panel panel1;
+        private Button btnEntrerBlesse;
+        private TextBox txtRikishiBlesse;
+        private Label lblJourBlesse;
+        private Label lblRikishiBlesseEnter;
+        private ComboBox cboJourSortieBlesse;
+        private Button btnSauvegarderBlesse;
+        private Button btnChargerListeBlesse;
+        private Label lblListeBlesse;
+        private BindingSource injuredRikishiBindingSource;
+        private ListView lstviewBlesse;
     }
 }
