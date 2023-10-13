@@ -5,5 +5,6 @@
         public string Name { get; set; } = string.Empty;
         public short Score { get; set; }
         public List<Rikishi> Rikishis { get; set; } = new();
+        public Dictionary<int, Rikishi> RikishisReplacement { get; set; } = new();
     }
 }

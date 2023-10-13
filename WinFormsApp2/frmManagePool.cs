@@ -35,7 +35,7 @@ namespace SumoPoolUI
             var resultatsNotOrdrered = await ScoreCalculator.CalculateScoreForPoolUntilSelectedDay(
                 Pool.Participants,
                 Pool.TimestampId,
-                Convert.ToInt16(cboJour.SelectedItem));
+                Convert.ToInt16(cboJour.SelectedItem), new List<InjuredRikishi>());
             var orderedResults = resultatsNotOrdrered.OrderByDescending(x => x.Score).ThenBy(x => x.Name).ToList();
             listScore.Items.Clear();
             foreach (var particiant in orderedResults)
@@ -79,6 +79,11 @@ namespace SumoPoolUI
                             new Rikishi { Name = record.Maegashira5To7},
                             new Rikishi { Name = record.Maegashira8To11 },
                             new Rikishi { Name= record.Maegashira12To17 }
+                        },
+                        RikishisReplacement = new Dictionary<int, Rikishi>()
+                        {
+                            {1, new Rikishi { Name = record.RikishiReplacement1} },
+                            {2, new Rikishi { Name = record.RikishiReplacement2} }
                         }
                     };
                     Pool.Participants.Add(participant);

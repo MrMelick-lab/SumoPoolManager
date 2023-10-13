@@ -7,6 +7,7 @@ using ConsoleTables;
 using Microsoft.Extensions.Logging;
 using SumoPoolManager.Models;
 using SumoPoolManager.Services;
+using System.Collections.Generic;
 
 using IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
@@ -41,7 +42,7 @@ if (validationResult.IsValid())
     if (scoreCalculator == null || pool == null)
         return;
 
-    var results = await scoreCalculator.CalculateScoreForPoolUntilSelectedDay(pool.Participants, pool.TimestampId, short.Parse(args[1]));
+    var results = await scoreCalculator.CalculateScoreForPoolUntilSelectedDay(pool.Participants, pool.TimestampId, short.Parse(args[1]), new List<InjuredRikishi>());
     var orderedPresentionResults = OrderAndMapResulsForPresentation(results);
     ConsoleTable.From(orderedPresentionResults).Write();
 }

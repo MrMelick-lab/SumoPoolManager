@@ -78,7 +78,7 @@ namespace TestProject
         [MemberData(nameof(GetInvalidParameters))]
         public async Task GivenInvalidParameterReturnNull(List<Participant> participantsSansScore, string bashoId, short day)
         {
-            var results = await _scoreCalculator.CalculateScoreForPoolUntilSelectedDay(participantsSansScore, bashoId, day);
+            var results = await _scoreCalculator.CalculateScoreForPoolUntilSelectedDay(participantsSansScore, bashoId, day, new List<InjuredRikishi>());
 
             results.Should().BeEmpty();
            await _webScrapper.DidNotReceive().GetBashoResults(Arg.Any<string>(), Arg.Any<short>());
@@ -89,7 +89,7 @@ namespace TestProject
         {
             _webScrapper.GetBashoResults("test", 1).Returns(new List<WinnerOnDay>());
 
-            var results = await _scoreCalculator.CalculateScoreForPoolUntilSelectedDay(new List<Participant> { new Participant() }, "test", 1);
+            var results = await _scoreCalculator.CalculateScoreForPoolUntilSelectedDay(new List<Participant> { new Participant() }, "test", 1, new List<InjuredRikishi>());
 
             results.Should().BeEmpty();
         }
@@ -99,7 +99,7 @@ namespace TestProject
         {
             _webScrapper.GetBashoResults("202303", 1).Returns(_results202303day1);
 
-            var results = await _scoreCalculator.CalculateScoreForPoolUntilSelectedDay(_participants, "202303", 1);
+            var results = await _scoreCalculator.CalculateScoreForPoolUntilSelectedDay(_participants, "202303", 1, new List<InjuredRikishi>());
 
             results.Should().HaveCount(1);
             results[0].Name.Should().Be("MrMelick");
@@ -111,7 +111,7 @@ namespace TestProject
         {
             _webScrapper.GetBashoResults("202303", 15).Returns(_results202303day15);
 
-            var results = await _scoreCalculator.CalculateScoreForPoolUntilSelectedDay(_participants, "202303", 15);
+            var results = await _scoreCalculator.CalculateScoreForPoolUntilSelectedDay(_participants, "202303", 15, new List<InjuredRikishi>());
 
             results.Should().HaveCount(1);
             results[0].Name.Should().Be("MrMelick");

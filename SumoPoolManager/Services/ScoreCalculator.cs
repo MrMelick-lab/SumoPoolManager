@@ -24,7 +24,7 @@ namespace SumoPoolManager.Services
         /// <param name="bashoId">The identifier of a sumo wrestling tournament with format YYYYMM. So the basho of new year basho of 2023 wich happens in januray have the id 202301</param>
         /// <param name="day">Between 1 and 15, the last of score calculation</param>
         /// <returns>The participants with their scores calculated</returns>
-        public async Task<List<Participant>> CalculateScoreForPoolUntilSelectedDay(List<Participant> participantsWithoutScore, string bashoId, short day)
+        public async Task<List<Participant>> CalculateScoreForPoolUntilSelectedDay(List<Participant> participantsWithoutScore, string bashoId, short day, List<InjuredRikishi> injuredRikishis)
         {
             var scoreParticipant = new List<Participant>();
             if (participantsWithoutScore?.Any() != true || string.IsNullOrWhiteSpace(bashoId) || day < 1 || day > 15)
