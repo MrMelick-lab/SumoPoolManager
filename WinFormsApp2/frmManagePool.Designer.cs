@@ -41,6 +41,8 @@
             lblCalculEnCours = new Label();
             lblSectionBlesse = new Label();
             panel1 = new Panel();
+            btnSupprimerBlesse = new Button();
+            btnModifierBlesse = new Button();
             lstviewBlesse = new ListView();
             btnChargerListeBlesse = new Button();
             lblListeBlesse = new Label();
@@ -148,6 +150,8 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(btnSupprimerBlesse);
+            panel1.Controls.Add(btnModifierBlesse);
             panel1.Controls.Add(lstviewBlesse);
             panel1.Controls.Add(btnChargerListeBlesse);
             panel1.Controls.Add(lblListeBlesse);
@@ -163,17 +167,37 @@
             panel1.Size = new Size(471, 593);
             panel1.TabIndex = 12;
             // 
+            // btnSupprimerBlesse
+            // 
+            btnSupprimerBlesse.Location = new Point(156, 56);
+            btnSupprimerBlesse.Name = "btnSupprimerBlesse";
+            btnSupprimerBlesse.Size = new Size(148, 23);
+            btnSupprimerBlesse.TabIndex = 23;
+            btnSupprimerBlesse.Text = "Supprimer un blessé";
+            btnSupprimerBlesse.UseVisualStyleBackColor = true;
+            btnSupprimerBlesse.Click += btnSupprimerBlesse_Click;
+            // 
+            // btnModifierBlesse
+            // 
+            btnModifierBlesse.Location = new Point(33, 55);
+            btnModifierBlesse.Name = "btnModifierBlesse";
+            btnModifierBlesse.Size = new Size(117, 23);
+            btnModifierBlesse.TabIndex = 22;
+            btnModifierBlesse.Text = "Modifier un blessé";
+            btnModifierBlesse.UseVisualStyleBackColor = true;
+            // 
             // lstviewBlesse
             // 
-            lstviewBlesse.Location = new Point(3, 128);
+            lstviewBlesse.Location = new Point(31, 158);
+            lstviewBlesse.MultiSelect = false;
             lstviewBlesse.Name = "lstviewBlesse";
-            lstviewBlesse.Size = new Size(465, 462);
+            lstviewBlesse.Size = new Size(416, 432);
             lstviewBlesse.TabIndex = 21;
             lstviewBlesse.UseCompatibleStateImageBehavior = false;
             // 
             // btnChargerListeBlesse
             // 
-            btnChargerListeBlesse.Location = new Point(35, 84);
+            btnChargerListeBlesse.Location = new Point(31, 114);
             btnChargerListeBlesse.Name = "btnChargerListeBlesse";
             btnChargerListeBlesse.Size = new Size(416, 23);
             btnChargerListeBlesse.TabIndex = 20;
@@ -183,7 +207,7 @@
             // lblListeBlesse
             // 
             lblListeBlesse.AutoSize = true;
-            lblListeBlesse.Location = new Point(196, 110);
+            lblListeBlesse.Location = new Point(192, 140);
             lblListeBlesse.Name = "lblListeBlesse";
             lblListeBlesse.Size = new Size(100, 15);
             lblListeBlesse.TabIndex = 19;
@@ -191,7 +215,7 @@
             // 
             // btnSauvegarderBlesse
             // 
-            btnSauvegarderBlesse.Location = new Point(33, 55);
+            btnSauvegarderBlesse.Location = new Point(31, 85);
             btnSauvegarderBlesse.Name = "btnSauvegarderBlesse";
             btnSauvegarderBlesse.Size = new Size(418, 23);
             btnSauvegarderBlesse.TabIndex = 18;
@@ -294,5 +318,7 @@
         private Label lblListeBlesse;
         private BindingSource injuredRikishiBindingSource;
         private ListView lstviewBlesse;
+        private Button btnModifierBlesse;
+        private Button btnSupprimerBlesse;
     }
 }

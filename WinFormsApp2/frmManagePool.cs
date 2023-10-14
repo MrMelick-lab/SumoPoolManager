@@ -3,6 +3,7 @@ using SumoPoolManager.Services;
 using CsvHelper;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using ValidationResult = SumoPoolManager.Models.ValidationResult;
 
 namespace SumoPoolUI
 {
@@ -122,6 +123,9 @@ namespace SumoPoolUI
             if (string.IsNullOrWhiteSpace(txtRikishiBlesse.Text))
                 result.Messages.Add("Veuillez entré un nom de rikishi blessé");
 
+            if (InjuredRikishis.Any(s => string.Equals(s.Name, txtRikishiBlesse.Text, StringComparison.OrdinalIgnoreCase)))
+                result.Messages.Add("Le rikishi est déjà présent dans la liste des blessés");
+
             return result;
         }
 
@@ -147,6 +151,30 @@ namespace SumoPoolUI
             var item = new ListViewItem(injuredRikishi.Name);
             item.SubItems.Add(injuredRikishi.DayOfExit.ToString());
             lstviewBlesse.Items.Add(item);
+        }
+
+        private void btnSupprimerBlesse_Click(object sender, EventArgs e)
+        {
+            if(lstviewBlesse.SelectedItems.Count == 0)
+            {
+                MessageBox.Show(string.Join(Environment.NewLine, "Veuillez choisir un blessé à supprimer"), "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var selectedItems = new ListViewItem(lstviewBlesse.SelectedItems[0].Text);
+            int indexOfItemToRemove = 0;
+            for(var i = 0; i < lstviewBlesse.Items.Count; i++)
+            {
+                if (string.Equals(lstviewBlesse.Items[i].Text, selectedItems.Text, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    indexOfItemToRemove = i;
+                    break;
+                }
+            }
+
+            lstviewBlesse.Items.RemoveAt(indexOfItemToRemove);
+            InjuredRikishis.Remove(InjuredRikishis.Single(r => string.Equals(r.Name, selectedItems.Text, StringComparison.InvariantCultureIgnoreCase)));
+            lstviewBlesse.Refresh();
         }
     }
 }
