@@ -51,6 +51,7 @@ namespace SumoPoolUI
             Cursor = Cursors.Default;
             lblCalculEnCours.Visible = false;
         }
+
         private void AddItemRikishi(string name, int score, List<Rikishi> rikishis)
         {
             var item = new ListViewItem(name);
