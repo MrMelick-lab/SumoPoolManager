@@ -59,8 +59,11 @@ namespace SumoPoolManager.Services
                 if (rikishi.DayOfEntry > i)
                     continue;
 
-                if (results.Any(r => string.Equals(r.Name.Trim(), rikishi.Name.Trim(), StringComparison.InvariantCultureIgnoreCase) && r.Day == i))
+                if (results.Any(r => string.Equals(r.Name.Trim(), rikishi.Name.Trim(), StringComparison.InvariantCultureIgnoreCase) && r.Day == i)) 
+                {
                     scoreForTheDay++;
+                    rikishi.Score++;
+                }
             }
 
             return scoreForTheDay;

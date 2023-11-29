@@ -1,11 +1,9 @@
 ﻿namespace SumoPoolManager.Models
 {
-    public class Rikishi
+    public class Records
     {
         public string Name { get; set; } = string.Empty;
-        public short DayOfEntry { get; set; }
         public short Score { get; set; }
-
-        public string NameAndScore => $"{Name} {Score}";
+        public string RikihisNameAndScores { get; set; } = string.Empty;
     }
 }

@@ -3,6 +3,7 @@ using SumoPoolManager.Services;
 using CsvHelper;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using CsvHelper.Configuration;
 
 namespace SumoPoolUI
 {
@@ -38,19 +39,31 @@ namespace SumoPoolUI
                 Convert.ToInt16(cboJour.SelectedItem));
             var orderedResults = resultatsNotOrdrered.OrderByDescending(x => x.Score).ThenBy(x => x.Name).ToList();
             listScore.Items.Clear();
+            var records = new List<Records>();
             foreach (var particiant in orderedResults)
             {
                 AddItem(particiant.Name, particiant.Score, particiant.Rikishis);
+                var listofRikishiNames = particiant.Rikishis.Select(r => r.NameAndScore);
+                listofRikishiNames = listofRikishiNames.OrderBy(r => r);
+                var rikishisNameAndScores = string.Join(", ", listofRikishiNames);
+                records.Add(new() { Name = particiant.Name, Score = particiant.Score, RikihisNameAndScores = rikishisNameAndScores });
             }
             listScore.Refresh();
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture);
+            using (StreamWriter writer = new(".\\resultatPool.csv"))
+            using (CsvWriter csv = new(writer, config))
+            {
+                csv.WriteRecords(records);
+            }
             Cursor = Cursors.Default;
             lblCalculEnCours.Visible = false;
+
         }
         private void AddItem(string name, int score, List<Rikishi> rikishis)
         {
             var item = new ListViewItem(name);
             item.SubItems.Add(score.ToString());
-            var listofRikishiNames = rikishis.Select(r => r.Name);
+            var listofRikishiNames = rikishis.Select(r => r.NameAndScore);
             listofRikishiNames = listofRikishiNames.OrderBy(r => r);
             item.SubItems.Add(string.Join(", ", listofRikishiNames));
             listScore.Items.Add(item);
