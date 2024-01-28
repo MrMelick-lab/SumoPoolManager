@@ -50,8 +50,8 @@ namespace SumoPoolUI
             }
             listScore.Refresh();
             var config = new CsvConfiguration(CultureInfo.InvariantCulture);
-            using (StreamWriter writer = new(".\\resultatPool.csv"))
-            using (CsvWriter csv = new(writer, config))
+            await using (StreamWriter writer = new(".\\resultatPool.csv"))
+            await using (CsvWriter csv = new(writer, config))
             {
                 csv.WriteRecords(records);
             }
@@ -83,16 +83,16 @@ namespace SumoPoolUI
                     var participant = new Participant
                     {
                         Name = record.PseudoTwitch,
-                        Rikishis = new List<Rikishi>
-                        {
-                            new Rikishi { Name = record.YokozunaOzeki},
-                            new Rikishi { Name = record.Sekiwake},
-                            new Rikishi { Name = record.KomusubiAndMaegashira1},
-                            new Rikishi { Name = record.Maegashira2To4},
-                            new Rikishi { Name = record.Maegashira5To7},
-                            new Rikishi { Name = record.Maegashira8To11 },
-                            new Rikishi { Name= record.Maegashira12To17 }
-                        }
+                        Rikishis =
+                        [
+                            new() { Name = record.YokozunaOzeki},
+                            new() { Name = record.Sekiwake},
+                            new() { Name = record.KomusubiAndMaegashira1},
+                            new() { Name = record.Maegashira2To4 },
+                            new() { Name = record.Maegashira5To7},
+                            new() { Name = record.Maegashira8To11 },
+                            new() { Name= record.Maegashira12To17 }
+                        ]
                     };
                     Pool.Participants.Add(participant);
                     AddItem(participant.Name, participant.Score, participant.Rikishis);
